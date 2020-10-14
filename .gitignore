@@ -1,0 +1,9 @@
+.idea
+target
+hs_err*
+*~
+*.iml
+*.#*
+release.properties
+pom.xml.*
+application-private.yml

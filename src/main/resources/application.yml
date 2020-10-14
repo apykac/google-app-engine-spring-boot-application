@@ -1,0 +1,31 @@
+###server config
+server:
+  port: ${PORT:8081}
+
+spring:
+  application:
+    name: ticket-pipeline
+  ###DB config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${app.datasource.url}
+    username: ${app.datasource.username}
+    password: ${app.datasource.password}
+  ###Import private configs
+  profiles:
+    include: private
+
+logging:
+  level:
+    com.roundrobin_assignment.ticketpipeline: trace
+
+app:
+  task:
+    get-queue:
+      fixed-delay: 500
+      thread-count: 4
+  flow:
+    flows-properties:
+      GET_Q_QUEUE_HANDLER:
+        thread-count: 1
+        batch-size: 1

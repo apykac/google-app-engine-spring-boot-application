@@ -1,0 +1,8 @@
+runtime: java11
+instance_class: B1
+manual_scaling:
+  instances: 1
+service: pipeline
+
+env_variables:
+  JAVA_HEAP_OPTS: -Xms250M -Xmx250M

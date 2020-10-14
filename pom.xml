@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.google.cloud.samples</groupId>
+        <artifactId>shared-configuration</artifactId>
+        <version>1.0.21</version>
+    </parent>
+
+    <groupId>com.roundrobin_assignment</groupId>
+    <artifactId>ticket-pipeline</artifactId>
+    <version>0-0-3-snapshot</version>
+
+    <properties>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <appengine.app.projectId>g-oauth-test-pod3</appengine.app.projectId>
+        <appengine.app.version>java11-${project.version}</appengine.app.version>
+        <appengine.app.deploy.promote>false</appengine.app.deploy.promote>
+        <appengine-maven-plugin.version>2.4.0</appengine-maven-plugin.version>
+        <org.springframework.boot.version>2.3.4.RELEASE</org.springframework.boot.version>
+        <org.springframework.cloud.version>Hoxton.SR8</org.springframework.cloud.version>
+        <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
+        <mysql-socket-factory.version>1.1.0</mysql-socket-factory.version>
+        <google-cloud-logging-logback.version>0.118.2-alpha</google-cloud-logging-logback.version>
+        <bcpg-jdk15on.version>1.66</bcpg-jdk15on.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${org.springframework.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${org.springframework.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <version>${org.springframework.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpg-jdk15on</artifactId>
+            <version>${bcpg-jdk15on.version}</version>
+        </dependency>
+
+        <!--DB dependencies-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud.sql</groupId>
+            <artifactId>mysql-socket-factory-connector-j-8</artifactId>
+            <version>${mysql-socket-factory.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${org.springframework.boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine-maven-plugin.version}</version>
+                <configuration>
+                    <projectId>${appengine.app.projectId}</projectId>
+                    <version>${appengine.app.version}</version>
+                    <deploy.promote>${appengine.app.deploy.promote}</deploy.promote>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
