@@ -1,26 +1,24 @@
 package com.roundrobin_assignment.ticketpipeline.controller;
 
-import com.roundrobin_assignment.ticketpipeline.dao.QueueDao;
-import com.roundrobin_assignment.ticketpipeline.domain.QWork;
 import com.roundrobin_assignment.ticketpipeline.domain.dto.BaseResponse;
+import com.roundrobin_assignment.ticketpipeline.tasks.GetQueueTask;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/")
 public class MainController {
-    private final QueueDao queueDao;
+    private final GetQueueTask getQueueTask;
 
-    public MainController(QueueDao queueDao) {
-        this.queueDao = queueDao;
+    public MainController(GetQueueTask getQueueTask) {
+        this.getQueueTask = getQueueTask;
     }
 
-    @GetMapping("/getTask")
-    public BaseResponse<List<QWork>> getTask() {
-        return new BaseResponse<List<QWork>>().setPayload(queueDao.getTasks());
+    @GetMapping("/runGetTask")
+    public BaseResponse<String> getTask() {
+        getQueueTask.run();
+        return new BaseResponse<String>().setPayload("Done");
     }
 
 

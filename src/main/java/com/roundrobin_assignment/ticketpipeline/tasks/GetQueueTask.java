@@ -42,7 +42,7 @@ public class GetQueueTask implements Task {
         executorService = Executors.newFixedThreadPool(flowsProperties.getFlowsProperties().get(GET_Q_QUEUE_HANDLER).getThreadCount());
     }
 
-    @Scheduled(fixedDelayString = "${app.task.get-queue.fixed-delay}")
+//    @Scheduled(fixedDelayString = "${app.task.get-queue.fixed-delay}")
     public void run() {
         LOG.debug("Run GetQueueTask");
         QWork qWork;
